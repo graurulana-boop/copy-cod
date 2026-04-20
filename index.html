@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A Special Gift For You</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="rain" aria-hidden="true"></div>
+
+    <header class="topbar">
+      <button class="lang-toggle" id="langBtn">EN/VI</button>
+    </header>
+
+    <main class="container">
+      <section class="hero-card">
+        <h1 id="mainText">A Special Gift For You</h1>
+        <p class="hint">click here to customize as you wish</p>
+        <div class="actions">
+          <button class="circle-btn" id="playBtn" aria-label="Play">▶</button>
+          <button class="circle-btn" id="settingsBtn" aria-label="Settings">⚙</button>
+        </div>
+      </section>
+
+      <section class="book" id="book">
+        <h2>Happy Birthday 🎂</h2>
+        <p>You are my favorite person in this world. Wishing you joy, health, and love every single day.</p>
+      </section>
+    </main>
+
+    <audio id="bgAudio" loop>
+      <source src="" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+
+    <div class="overlay hidden" id="settingsOverlay">
+      <div class="modal">
+        <div class="modal-head">
+          <h3>⚙️ Website Settings</h3>
+          <button id="closeModal" class="close-btn" aria-label="Close">×</button>
+        </div>
+
+        <section class="setting-group">
+          <h4>Sound Settings</h4>
+          <label>Background Music:</label>
+          <select id="musicSelect">
+            <option value="">No music</option>
+            <option value="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Scott_Holmes/Happy_Music/Scott_Holmes_-_01_-_Upbeat_Party.mp3">Upbeat Party</option>
+            <option value="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Scott_Holmes/Happy_Music/Scott_Holmes_-_03_-_Awe.mp3">Awe</option>
+          </select>
+          <button id="previewBtn" class="small-btn">▶ Preview</button>
+        </section>
+
+        <section class="setting-group">
+          <h4>Countdown Settings</h4>
+          <label for="countdown">Countdown Time:</label>
+          <select id="countdown">
+            <option>3 seconds</option>
+            <option>5 seconds</option>
+            <option>10 seconds</option>
+          </select>
+        </section>
+
+        <section class="setting-group">
+          <h4>Text Rain Settings</h4>
+          <label for="rainText">Main rain text:</label>
+          <input id="rainText" type="text" value="LOVE | HAPPY BIRTHDAY | FOR YOU" />
+          <label for="color1">Rain color 1:</label>
+          <input id="color1" type="color" value="#ff4fa2" />
+          <label for="color2">Rain color 2:</label>
+          <input id="color2" type="color" value="#7a5cff" />
+        </section>
+
+        <section class="setting-group">
+          <h4>Main Text Settings</h4>
+          <label for="mainTextInput">Main text content:</label>
+          <input id="mainTextInput" type="text" value="A Special Gift For You" />
+          <label for="mainColor">Main text color:</label>
+          <input id="mainColor" type="color" value="#ffffff" />
+        </section>
+
+        <section class="setting-group">
+          <h4>Book Settings</h4>
+          <label class="switch-line">Show book:
+            <input id="bookToggle" type="checkbox" checked />
+          </label>
+          <label class="switch-line">Show heart effect:
+            <input id="heartToggle" type="checkbox" checked />
+          </label>
+        </section>
+
+        <button id="applyBtn" class="apply-btn">Apply Settings</button>
+      </div>
+    </div>
+
+    <footer>
+      Website created by tiktok: <a href="https://www.tiktok.com/@iamtritoan" target="_blank" rel="noreferrer">iamtritoan</a>
+    </footer>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
