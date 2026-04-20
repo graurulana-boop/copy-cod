@@ -1,77 +1,190 @@
-const settingsBtn = document.getElementById('settingsBtn');
-const closeModal = document.getElementById('closeModal');
-const overlay = document.getElementById('settingsOverlay');
-const applyBtn = document.getElementById('applyBtn');
-const playBtn = document.getElementById('playBtn');
-const previewBtn = document.getElementById('previewBtn');
-const musicSelect = document.getElementById('musicSelect');
-const audio = document.getElementById('bgAudio');
-const rain = document.querySelector('.rain');
-const rainTextInput = document.getElementById('rainText');
-const color1 = document.getElementById('color1');
-const color2 = document.getElementById('color2');
-const mainText = document.getElementById('mainText');
-const mainTextInput = document.getElementById('mainTextInput');
-const mainColor = document.getElementById('mainColor');
-const book = document.getElementById('book');
-const bookToggle = document.getElementById('bookToggle');
-const heartToggle = document.getElementById('heartToggle');
+:root {
+  --bg1: #16092f;
+  --bg2: #2e0d59;
+  --card: rgba(255, 255, 255, 0.1);
+  --text: #fff;
+  --accent: #ff4fa2;
+}
 
-settingsBtn.addEventListener('click', () => overlay.classList.remove('hidden'));
-closeModal.addEventListener('click', () => overlay.classList.add('hidden'));
-overlay.addEventListener('click', (e) => {
-  if (e.target === overlay) overlay.classList.add('hidden');
-});
+* { box-sizing: border-box; }
 
-function buildRain() {
-  rain.innerHTML = '';
-  const words = rainTextInput.value.split('|').map((w) => w.trim()).filter(Boolean);
-  const picks = words.length ? words : ['HAPPY BIRTHDAY'];
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Quicksand', sans-serif;
+  background: radial-gradient(circle at top, #4b1a8f 0%, var(--bg2) 35%, var(--bg1) 100%);
+  color: var(--text);
+  overflow: hidden;
+}
 
-  for (let i = 0; i < 55; i += 1) {
-    const span = document.createElement('span');
-    span.textContent = picks[i % picks.length];
-    span.style.left = `${Math.random() * 100}%`;
-    span.style.animationDuration = `${5 + Math.random() * 8}s`;
-    span.style.animationDelay = `${Math.random() * 4}s`;
-    span.style.color = i % 2 === 0 ? color1.value : color2.value;
-    rain.appendChild(span);
+.topbar {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 3;
+}
+
+.lang-toggle {
+  border: 1px solid rgba(255,255,255,.45);
+  background: rgba(255,255,255,.08);
+  color: #fff;
+  border-radius: 99px;
+  padding: 8px 14px;
+}
+
+.container {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.hero-card, .book {
+  width: min(760px, 96vw);
+  background: var(--card);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 24px;
+  padding: 24px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0,0,0,.35);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(30px, 6vw, 54px);
+  letter-spacing: .02em;
+}
+
+.hint {
+  opacity: .9;
+  margin: 10px 0 16px;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.circle-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.4);
+  background: rgba(255,255,255,.18);
+  color: white;
+  cursor: pointer;
+}
+
+.book {
+  transition: .25s ease;
+}
+
+.hidden { display: none !important; }
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(10, 8, 20, .65);
+  z-index: 10;
+  padding: 14px;
+}
+
+.modal {
+  width: min(740px, 95vw);
+  max-height: 92vh;
+  overflow: auto;
+  background: #ffffff;
+  color: #1a1a1a;
+  border-radius: 20px;
+  padding: 18px;
+}
+
+.modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-btn {
+  font-size: 30px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.setting-group {
+  margin-bottom: 14px;
+  border: 1px solid #ececf3;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.setting-group h4 {
+  margin: 0 0 10px;
+}
+
+.setting-group input,
+.setting-group select,
+.small-btn,
+.apply-btn {
+  width: 100%;
+  margin-top: 6px;
+  margin-bottom: 8px;
+  padding: 9px 10px;
+  border-radius: 9px;
+  border: 1px solid #d6d8e0;
+  font: inherit;
+}
+
+.apply-btn {
+  background: linear-gradient(90deg, #ff4fa2, #7a5cff);
+  border: 0;
+  color: #fff;
+  font-weight: 700;
+}
+
+.switch-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rain {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.rain span {
+  position: absolute;
+  top: -10%;
+  opacity: .85;
+  animation: drop linear infinite;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+@keyframes drop {
+  to {
+    transform: translateY(120vh);
   }
 }
 
-function applySettings() {
-  mainText.textContent = mainTextInput.value || 'A Special Gift For You';
-  mainText.style.color = mainColor.value;
-  book.classList.toggle('hidden', !bookToggle.checked);
-  rain.style.display = heartToggle.checked ? 'block' : 'none';
-  buildRain();
-  overlay.classList.add('hidden');
+footer {
+  position: fixed;
+  bottom: 8px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 12px;
+  opacity: .85;
 }
 
-function setAudio() {
-  if (musicSelect.value) {
-    audio.src = musicSelect.value;
-  }
-}
-
-previewBtn.addEventListener('click', async () => {
-  setAudio();
-  if (!audio.src) return;
-  await audio.play().catch(() => {});
-});
-
-playBtn.addEventListener('click', async () => {
-  setAudio();
-  if (!audio.src) return;
-  if (audio.paused) {
-    await audio.play().catch(() => {});
-    playBtn.textContent = '⏸';
-  } else {
-    audio.pause();
-    playBtn.textContent = '▶';
-  }
-});
-
-applyBtn.addEventListener('click', applySettings);
-window.addEventListener('resize', buildRain);
-buildRain();
+footer a { color: #ffd0ff; }
